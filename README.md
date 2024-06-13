@@ -30,36 +30,33 @@ pragma solidity 0.8.18;
        and from the balance of the “sender”.
     5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
        to the amount that is supposed to be burned.
-*/
-
 contract MyToken {
-    
-    // Public variables
-    string public name;
-    string public symbol;
-    uint256 public totalSupply;
-    
-    // Mapping to store balances
-    mapping(address => uint256) public balances;
+    // public variables
+    string public tokenName;
+    string public tokenAbbrv;
+    uint public totalSupply;
 
-    // Constructor to initialize the token details
-    constructor(string memory _name, string memory _symbol) {
-        name = _name;
-        symbol = _symbol;
+    // mapping variable
+    mapping(address => uint) public balances;
+
+    // constructor
+    constructor() {
+        tokenName = "MyToken";
+        tokenAbbrv = "MTK";
         totalSupply = 0;
     }
-    
-    // Mint function to create new tokens
-    function mint(address _to, uint256 _value) public {
+
+    // mint function
+    function mint(address _address, uint _value) public {
         totalSupply += _value;
-        balances[_to] += _value;
+        balances[_address] += _value;
     }
-    
-    // Burn function to destroy tokens
-    function burn(address _from, uint256 _value) public {
-        require(balances[_from] >= _value, "Insufficient balance to burn");
+
+    // burn function
+    function burn(address _address, uint _value) public {
+        require(balances[_address] >= _value, "Insufficient balance");
         totalSupply -= _value;
-        balances[_from] -= _value;
+        balances[_address] -= _value;
     }
 }
 
